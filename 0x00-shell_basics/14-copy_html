@@ -1,2 +1,2 @@
 #!/bin/bash
-echo 'cp -n *.html ..'>> 14-copy_html
+cp -n *.html ..
