@@ -1,2 +1,2 @@
 #!/bin/bash
-sort /etc/passwd | cut -d":" -f1,22
+-d":" -f 1,6 /etc/passwd | sort > 22-users_and_homes
