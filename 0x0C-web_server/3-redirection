@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# This script redirects to another page
-sudo apt-get update
+# Configures Nginx /redirect_me page
+REDIRECT="location /redirect_me {\n return 301 https://www.youtube.com/watch?v=lGEY8IulWiA;\n}\n"
+
+sudo apt-get -y update
 sudo apt-get -y install nginx
-echo "Hello World!" | sudo tee usr/share/nginx/html/index.html
-sudo /etc/init.d/nginx start
-redirection="location \/redirect_me \{\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t\}"
-filename="/etc/nginx/sites-available/default"
-sed -i '/^\tserver_name localhost;/a\\n\t'"$redirection"'' $filename
-sudo service nginx restart
+echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
+sudo service nginx start
+sudo sed -i "30i $REDIRECT" /etc/nginx/sites-available/default
+service nginx restart
