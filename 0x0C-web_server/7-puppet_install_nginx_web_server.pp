@@ -6,5 +6,5 @@
 sudo apt-get update
 sudo apt-get -y install nginx
 service nginx start
-echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
+echo "Hello World!" | sudo tee /usr/share/nginx/html/some_page.html
 
