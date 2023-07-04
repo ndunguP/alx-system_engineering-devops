@@ -3,5 +3,5 @@
 FILE=/etc/nginx/sites-available/default
 sudo apt-get -y update
 sudo apt-get -y install nginx
-sudo sed -i "23i \\\tadd_header X-Served-By \$hostname;" $FILE
+sudo sed -i '/listen 80 default_server;/ a \\t add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
 sudo service nginx restart
