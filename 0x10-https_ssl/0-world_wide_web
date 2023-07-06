@@ -1,26 +1,19 @@
 #!/usr/bin/env bash
-# This script displays information about subdomains
-func1 () {
-    line=$(dig "$2"".""$1" | grep -A1 'ANSWER SECTION:' | grep -A1 'IN')
-    sub=$(echo "$line" | awk '{ print $1 }' | cut -d '.' -f1)
-    rec=$(echo "$line" | awk '{ print $4 }')
-    ip=$(echo "$line" | awk '{ print $5 }')
-    echo The subdomain "$sub" is a "$rec" record and points to "$ip"
+# Usage: ./1-world_wide_web <domain> <subdomain>
+# Display information about subdomains.
+
+domain_information () {
+    line=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
+    echo "$2 $line" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
 }
 
-func2 () {
-    args=("www" "lb-01" "web-01" "web-02")
-    for i in "${args[@]}"; do
-        line=$(dig "$i"".""$1" | grep -A1 'ANSWER SECTION:' | grep -A1 'IN')
-        sub=$(echo "$line" | awk '{ print $1 }' | cut -d '.' -f1)
-        rec=$(echo "$line" | awk '{ print $4 }')
-        ip=$(echo "$line" | awk '{ print $5 }')
-        echo The subdomain "$sub" is a "$rec" record and points to "$ip"
-    done
-}
-
-if [ "$#" -eq "2" ]; then
-    func1 "$1" "$2"
-else
-    func2 "$1"
+if [ "$#" == 1 ]
+then
+  domain_information "$1" "www"
+  domain_information "$1" "lb-01"
+  domain_information "$1" "web-01"
+  domain_information "$1" "web-02"
+elif [ "$#" == 2 ]
+then
+  domain_information "$1" "$2"
 fi
