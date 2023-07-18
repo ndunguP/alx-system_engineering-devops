@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Get the user name from the command line argument
+username=$1
+
+# Run the whoami command under the specified user
+su - $username -c "whoami"
+
